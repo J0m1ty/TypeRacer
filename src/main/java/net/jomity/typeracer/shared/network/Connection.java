@@ -1,6 +1,8 @@
-package net.jomity.typeracer.shared;
+package net.jomity.typeracer.shared.network;
 
-import net.jomity.typeracer.server.client.ClientPacket;
+import net.jomity.typeracer.shared.constants.DisconnectionReason;
+import net.jomity.typeracer.shared.network.packets.DisconnectPacket;
+import net.jomity.typeracer.shared.network.packets.Packet;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -63,8 +65,6 @@ public class Connection {
 
     public void disconnect(DisconnectionReason reason) {
         if (disconnected) return;
-
-        System.out.println("Disconnecting because of " + reason);
 
         sendPacket(new DisconnectPacket());
 

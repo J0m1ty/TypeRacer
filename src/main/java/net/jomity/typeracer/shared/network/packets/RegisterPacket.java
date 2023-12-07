@@ -1,6 +1,8 @@
-package net.jomity.typeracer.shared;
+package net.jomity.typeracer.shared.network.packets;
 
 import javafx.scene.paint.Color;
+import net.jomity.typeracer.shared.constants.PacketType;
+import net.jomity.typeracer.shared.constants.PlayerInformation;
 
 import java.io.Serial;
 
@@ -8,16 +10,25 @@ public class RegisterPacket extends Packet {
     @Serial
     private static final long serialVersionUID = -7430141599644222468L;
 
-    private final String name;
-    private final double red;
-    private final double green;
-    private final double blue;
+    private String name;
+    private double red;
+    private double green;
+    private double blue;
 
-    public RegisterPacket(String name, Color color) {
-        this.name = name;
-        this.red = color.getRed();
-        this.green = color.getGreen();
-        this.blue = color.getBlue();
+    public RegisterPacket(PlayerInformation info) {
+        this.name = info.name;
+        this.red = info.color.getRed();
+        this.green = info.color.getGreen();
+        this.blue = info.color.getBlue();
+    }
+
+    public void validate() {
+        name = name.trim().substring(0, Math.min(name.length(), 16)).replaceAll("[^a-zA-Z0-9\\s]", "");
+        if (name.length() < 3) name = "Player";
+
+        red = Math.max(0, Math.min(1, red));
+        green = Math.max(0, Math.min(1, green));
+        blue = Math.max(0, Math.min(1, blue));
     }
 
     @Override

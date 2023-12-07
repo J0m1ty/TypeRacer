@@ -1,4 +1,4 @@
-package net.jomity.typeracer.shared;
+package net.jomity.typeracer.shared.network;
 
 import net.jomity.typeracer.server.TypeRacerServer;
 

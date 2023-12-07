@@ -1,6 +1,6 @@
-package net.jomity.typeracer.typeracerproject.server.client;
+package net.jomity.typeracer.server.client;
 
-import net.jomity.typeracer.typeracerproject.shared.Packet;
+import net.jomity.typeracer.shared.network.packets.Packet;
 
 public class ClientPacket {
     public final Packet packet;

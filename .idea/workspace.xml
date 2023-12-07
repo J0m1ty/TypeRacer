@@ -4,34 +4,124 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="">
+    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/net/jomity/typeracer/typeracerproject/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/net/jomity/typeracer/typeracerproject/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/ClientPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/ClientPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/DisconnectionReason.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/DisconnectionReason.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PacketType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PlayerInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PlayerInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/HeartbeatMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/HeartbeatMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/DisconnectPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/DisconnectPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/HeartbeatPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/HeartbeatPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/Packet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/RegisterPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/RegisterPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/SignalPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/SignalPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2Z9Z6zHcWL6jHBDFezqSoltbKau" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject\shared" />
+      <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject\server" />
+      <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Compound.Build">
+    <configuration name="TypeRacerClient1" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="net.jomity.typeracer.client.TypeRacerClient" />
+      <module name="TypeRacerProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.jomity.typeracer.typeracerproject.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TypeRacerClient2" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="net.jomity.typeracer.client.TypeRacerClient" />
+      <module name="TypeRacerProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.jomity.typeracer.typeracerproject.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TypeRacerServer" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="net.jomity.typeracer.server.TypeRacerServer" />
+      <module name="TypeRacerProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="net.jomity.typeracer.typeracerproject.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Build" type="CompoundRunConfigurationType">
+      <toRun name="TypeRacerClient1" type="Application" />
+      <toRun name="TypeRacerClient2" type="Application" />
+      <toRun name="TypeRacerServer" type="Application" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.TypeRacerServer" />
+      <item itemvalue="Application.TypeRacerClient1" />
+      <item itemvalue="Application.TypeRacerClient2" />
+      <item itemvalue="Compound.Build" />
+    </list>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -42,5 +132,9 @@
       <updated>1701836085879</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
 </project>

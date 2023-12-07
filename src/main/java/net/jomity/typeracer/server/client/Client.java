@@ -1,70 +1,114 @@
-package net.jomity.typeracer.typeracerproject.server.client;
-import net.jomity.typeracer.typeracerproject.server.TypeRacerServer;
-import net.jomity.typeracer.typeracerproject.shared.Packet;
+package net.jomity.typeracer.server.client;
+import net.jomity.typeracer.shared.constants.PlayerInformation;
+import net.jomity.typeracer.shared.network.Connection;
+import net.jomity.typeracer.shared.constants.DisconnectionReason;
+import net.jomity.typeracer.shared.network.HeartbeatMonitor;
+import net.jomity.typeracer.shared.network.packets.*;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-class HeartbeatMonitor {
-    private volatile boolean heartbeatReceived = false;
-    private long lastHeartbeat = System.currentTimeMillis();
-
-    public synchronized void setHeartbeatReceived(boolean received) {
-        heartbeatReceived = received;
-        lastHeartbeat = System.currentTimeMillis();
-    }
-
-    public synchronized boolean hasRespondedToHeartbeat() {
-        return heartbeatReceived && (System.currentTimeMillis() - lastHeartbeat <= TypeRacerServer.TIMEOUT);
-    }
-}
-
-public class Client extends HeartbeatMonitor {
+public class Client extends Connection {
     public int id;
-    public Socket socket;
-    public ObjectOutputStream output;
-    public ObjectInputStream input;
-    public boolean disconnected = false;
+
+    private Client opponent;
+
+    public PlayerInformation information;
+    public boolean initialized = false;
+
+    private final HeartbeatMonitor monitor = new HeartbeatMonitor();
+    private BlockingQueue<ClientPacket> queue;
+
+    private Thread listenerThread;
+    private Thread monitorThread;
 
     public Client(int id, Socket socket) {
+        super(socket);
+
         this.id = id;
-        this.socket = socket;
-
-        try {
-            output = new ObjectOutputStream(socket.getOutputStream());
-            input = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            disconnected = true;
-        }
     }
 
-    public void sendPacket(Packet packet) {
-        if (!disconnected) {
-            try {
-                output.writeObject(packet);
-                output.flush();
-            } catch (IOException e) {
-                disconnected = true;
-            }
-        }
+    public void registerOpponent(Client opponent) { this.opponent = opponent; }
+
+    public Client getOpponent() {
+        return opponent;
     }
 
-    public void listenForPackets(BlockingQueue<ClientPacket> queue) {
-        new Thread(() -> {
-            while (!disconnected) {
+    public void registerQueue(BlockingQueue<ClientPacket> queue) {
+        this.queue = queue;
+    }
+
+    public void listenForPackets() {
+        if (listenerThread != null) return;
+
+        listenerThread = new Thread(() -> {
+            while (isConnected()) {
                 try {
-                    Packet packet = (Packet) input.readObject();
-                    queue.put(new ClientPacket(packet, this));
+                    Packet raw = readPacket();
+
+                    if (raw instanceof HeartbeatPacket) {
+                        monitor.setState(true);
+                        continue;
+                    }
+
+                    if (raw instanceof DisconnectPacket) {
+                        disconnect(DisconnectionReason.REMOTE);
+                        continue;
+                    }
+
+                    if (raw instanceof RegisterPacket packet) {
+                        packet.validate();
+                        information = new PlayerInformation(packet.getName(), packet.getColor());
+                        initialized = true;
+                    }
+
+                    if (queue != null) queue.put(new ClientPacket(raw, this));
                 } catch (IOException | ClassNotFoundException e) {
-                    disconnected = true;
+                    disconnect(DisconnectionReason.ERROR);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     return;
                 }
             }
-        }).start();
+        });
+
+        listenerThread.start();
+    }
+
+    public void monitorConnection(long timeout) {
+        if (monitorThread != null) return;
+
+        monitorThread = new Thread(() -> {
+            monitor.setState(false);
+            sendPacket(new HeartbeatPacket());
+
+            try {
+                Thread.sleep(timeout);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+
+            if (!monitor.hasResponded()) {
+                disconnect(DisconnectionReason.ERROR);
+            }
+        });
+
+        monitorThread.start();
+    }
+
+    @Override
+    public void disconnect(DisconnectionReason reason) {
+        super.disconnect(reason);
+
+        try {
+            if (queue != null) queue.put(new ClientPacket(new SignalPacket(), null));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        listenerThread.interrupt();
+        monitorThread.interrupt();
     }
 }

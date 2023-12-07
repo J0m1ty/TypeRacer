@@ -1,4 +1,4 @@
-package net.jomity.typeracer.typeracerproject.server;
+package net.jomity.typeracer.server;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -8,12 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import net.jomity.typeracer.typeracerproject.server.client.Client;
-import net.jomity.typeracer.typeracerproject.server.client.ClientPacket;
-import net.jomity.typeracer.typeracerproject.shared.HeartbeatPacket;
-import net.jomity.typeracer.typeracerproject.shared.Packet;
-import net.jomity.typeracer.typeracerproject.shared.SignalPacket;
-import net.jomity.typeracer.typeracerproject.shared.StartPacket;
+import net.jomity.typeracer.server.client.Client;
+import net.jomity.typeracer.server.client.ClientPacket;
+import net.jomity.typeracer.shared.constants.Result;
+import net.jomity.typeracer.shared.constants.DisconnectionReason;
+import net.jomity.typeracer.shared.network.packets.*;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -25,7 +24,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class TypeRacerServer extends Application {
-    public static final int TIMEOUT = 5000;
+    public static final long TIMEOUT = 100;
 
     private ServerSocket serverSocket;
 
@@ -38,9 +37,7 @@ public class TypeRacerServer extends Application {
     public int nClients = 0;
 
     public void log(String text) {
-        Platform.runLater(() -> {
-            console.appendText(text + "\n");
-        });
+        Platform.runLater(() -> console.appendText(text + "\n"));
     }
 
     @Override
@@ -65,10 +62,12 @@ public class TypeRacerServer extends Application {
                     Socket socket = serverSocket.accept();
 
                     Client client = new Client(++nClients, socket);
+                    client.listenForPackets();
+                    client.monitorConnection(TIMEOUT);
 
                     log("Client #" + nClients + " connected with hostname " + socket.getInetAddress().getHostAddress());
 
-                    if (waiting == null) {
+                    if (waiting == null || !waiting.isConnected()) {
                         log("Client #" + client.id + " is waiting for another player to join");
                         waiting = client;
                     } else {
@@ -77,12 +76,96 @@ public class TypeRacerServer extends Application {
                         gameThread.start();
 
                         activeGames.put(gameThread, gameInstance);
+
+                        waiting = null;
                     }
                 }
             } catch (IOException e) {
                 Platform.exit();
             }
         }).start();
+    }
+
+    class Game implements Runnable {
+        private volatile boolean gameRunning = true;
+
+        public Client player1;
+        public Client player2;
+        public boolean initialized = false;
+
+        private final BlockingQueue<ClientPacket> packetQueue;
+
+        public Game(Client player1, Client player2) {
+            this.player1 = player1;
+            this.player2 = player2;
+
+            player1.registerOpponent(player2);
+            player2.registerOpponent(player1);
+
+            this.packetQueue = new LinkedBlockingQueue<>();
+
+            player1.registerQueue(packetQueue);
+            player2.registerQueue(packetQueue);
+        }
+
+        @Override
+        public void run() {
+            log("Game starting between client #" + player1.id + " and client # " + player2.id);
+
+            while (gameRunning) {
+                try {
+                    ClientPacket clientPacket = packetQueue.take();
+                    Packet raw = clientPacket.packet;
+                    Client client = clientPacket.sourceClient;
+
+                    if (!gameRunning) {
+                        log("Game is closing");
+                        break;
+                    }
+
+                    if (!player1.isConnected()) {
+                        log("Client #" + player1.id + " disconnected");
+                        player2.sendPacket(new GameOverPacket(Result.WIN));
+                        break;
+                    }
+
+                    if (!player2.isConnected()) {
+                        log("Client #" + player2.id + " disconnected");
+                        player1.sendPacket(new GameOverPacket(Result.WIN));
+                        break;
+                    }
+
+                    if (raw instanceof SignalPacket) continue;
+
+                    if (!initialized) {
+                        if (player1.initialized && player2.initialized) {
+                            player1.sendPacket(new StartPacket(player1.information));
+                            player2.sendPacket(new StartPacket(player2.information));
+                            initialized = true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+
+                    System.out.println("Unhandled packet: " + raw.getType() + " from client #" + client.id);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+
+            stop();
+        }
+
+        public void stop() {
+            log("Game ended");
+
+            gameRunning = false;
+
+            player1.disconnect(DisconnectionReason.UNKNOWN);
+            player2.disconnect(DisconnectionReason.UNKNOWN);
+        }
     }
 
     @Override
@@ -100,129 +183,8 @@ public class TypeRacerServer extends Application {
     }
 
     @FXML
-    public void exitApplication(ActionEvent event) {
+    public void exitApplication(ActionEvent ignoredEvent) {
         Platform.exit();
-    }
-
-    class Game implements Runnable {
-        private volatile boolean gameRunning = true;
-
-        public Client player1;
-        public Client player2;
-
-        private final BlockingQueue<ClientPacket> packetQueue;
-
-        private Thread monitor1;
-        private Thread monitor2;
-
-        public Game(Client player1, Client player2) {
-            this.player1 = player1;
-            this.player2 = player2;
-
-            this.packetQueue = new LinkedBlockingQueue<>();
-
-            monitor1 = new Thread(() -> monitorConnection(player1));
-            monitor2 = new Thread(() -> monitorConnection(player2));
-        }
-
-        @Override
-        public void run() {
-            log("Match created between player #" + player1.id + " and " + player2.id);
-
-            player1.sendPacket(new StartPacket());
-            player2.sendPacket(new StartPacket());
-
-            monitor1.start();
-            monitor2.start();
-
-            player1.listenForPackets(packetQueue);
-            player2.listenForPackets(packetQueue);
-
-            while (gameRunning) {
-                try {
-                    ClientPacket clientPacket = packetQueue.take();
-
-                    if (clientPacket.packet instanceof SignalPacket) {
-                        if (!gameRunning) {
-                            log("Game is closing");
-                            break;
-                        }
-                        if (player1.disconnected) {
-                            log("Client #" + player1.id + " disconnected");
-                            break;
-                        }
-                        if (player2.disconnected) {
-                            log("Client #" + player2.id + " disconnected");
-                            break;
-                        }
-                        continue;
-                    }
-
-                    handlePacket(clientPacket.packet, clientPacket.sourceClient);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
-                }
-            }
-
-            stop();
-        }
-
-        private void handlePacket(Packet packet, Client client) {
-            switch (packet.getType()) {
-                case HEARTBEAT:
-                    log("Received heartbeat from client #" + client.id);
-                    client.setHeartbeatReceived(true);
-                    break;
-            }
-        }
-
-        private void monitorConnection(Client client) {
-            while (gameRunning && !client.disconnected) {
-                log("Sending heartbeat request to client #" + client.id);
-                client.sendPacket(new HeartbeatPacket());
-                client.setHeartbeatReceived(false);
-
-                try {
-                    Thread.sleep(TIMEOUT);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
-                }
-
-                if (!client.hasRespondedToHeartbeat()) {
-                    client.disconnected = true;
-                    try {
-                        packetQueue.put(new ClientPacket(new SignalPacket(), client));
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                        return;
-                    }
-                }
-            }
-        }
-
-        public void stop() {
-            log("Game ended");
-
-            gameRunning = false;
-            monitor1.interrupt();
-            monitor2.interrupt();
-
-            try {
-                player1.socket.close();
-            } catch (IOException ignored) {}
-
-            try {
-                player2.socket.close();
-            } catch (IOException ignored) {}
-
-            try {
-                packetQueue.put(new ClientPacket(new SignalPacket(), null));
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
     }
 }
 

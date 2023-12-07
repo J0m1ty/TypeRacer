@@ -1,5 +1,5 @@
-package net.jomity.typeracer.shared;
+package net.jomity.typeracer.shared.constants;
 
 public enum Result {
-    WIN, LOSE;
+    WIN, LOSE
 }

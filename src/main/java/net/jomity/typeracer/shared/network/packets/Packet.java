@@ -1,4 +1,6 @@
-package net.jomity.typeracer.shared;
+package net.jomity.typeracer.shared.network.packets;
+
+import net.jomity.typeracer.shared.constants.PacketType;
 
 import java.io.Serial;
 import java.io.Serializable;
