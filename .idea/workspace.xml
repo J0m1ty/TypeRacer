@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="update POM">
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="update javafx version">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +55,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MavenSettings"
@@ -61,12 +63,13 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\target" />
       <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject\shared" />
       <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject\server" />
       <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.TypeRacerServer-jar-with-dependencies.jar">
+  <component name="RunManager" selected="Compound.Build">
     <configuration name="TypeRacerClient1" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="net.jomity.typeracer.client.TypeRacerClient" />
       <module name="TypeRacerProject" />
@@ -112,46 +115,12 @@
       <toRun name="TypeRacerServer" type="Application" />
       <method v="2" />
     </configuration>
-    <configuration name="TypeRacerClient-jar-with-dependencies.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerClient-jar-with-dependencies.jar" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TypeRacerProject-1.0-jar-with-dependencies.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0-jar-with-dependencies.jar" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TypeRacerProject-1.0.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0.jar" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TypeRacerServer-jar-with-dependencies.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerServer-jar-with-dependencies.jar" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TypeRacerServer.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerServer.jar" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Application.TypeRacerServer" />
       <item itemvalue="Application.TypeRacerClient1" />
       <item itemvalue="Application.TypeRacerClient2" />
       <item itemvalue="Compound.Build" />
-      <item itemvalue="JAR Application.TypeRacerClient-jar-with-dependencies.jar" />
-      <item itemvalue="JAR Application.TypeRacerProject-1.0-jar-with-dependencies.jar" />
-      <item itemvalue="JAR Application.TypeRacerProject-1.0.jar" />
-      <item itemvalue="JAR Application.TypeRacerServer-jar-with-dependencies.jar" />
-      <item itemvalue="JAR Application.TypeRacerServer.jar" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JAR Application.TypeRacerServer-jar-with-dependencies.jar" />
-        <item itemvalue="JAR Application.TypeRacerServer.jar" />
-        <item itemvalue="JAR Application.TypeRacerClient-jar-with-dependencies.jar" />
-        <item itemvalue="JAR Application.TypeRacerProject-1.0-jar-with-dependencies.jar" />
-        <item itemvalue="JAR Application.TypeRacerProject-1.0.jar" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -194,7 +163,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701915019445</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update javafx version">
+      <option name="closed" value="true" />
+      <created>1701915490709</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1701915490709</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -212,6 +189,7 @@
     <MESSAGE value="Changes" />
     <MESSAGE value="Allow builds" />
     <MESSAGE value="update POM" />
-    <option name="LAST_COMMIT_MESSAGE" value="update POM" />
+    <MESSAGE value="update javafx version" />
+    <option name="LAST_COMMIT_MESSAGE" value="update javafx version" />
   </component>
 </project>

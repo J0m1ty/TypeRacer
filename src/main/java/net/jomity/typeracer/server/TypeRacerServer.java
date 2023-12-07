@@ -139,8 +139,8 @@ public class TypeRacerServer extends Application {
 
                     if (!initialized) {
                         if (player1.initialized && player2.initialized) {
-                            player1.sendPacket(new StartPacket(player1.information));
-                            player2.sendPacket(new StartPacket(player2.information));
+                            player1.sendPacket(new StartPacket(player2.information));
+                            player2.sendPacket(new StartPacket(player1.information));
                             initialized = true;
                         }
                         else {

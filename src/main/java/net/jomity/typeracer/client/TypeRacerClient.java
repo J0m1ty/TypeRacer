@@ -2,20 +2,28 @@ package net.jomity.typeracer.client;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.css.FontFace;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.jomity.typeracer.shared.constants.PlayerInformation;
 import net.jomity.typeracer.shared.constants.Result;
 import net.jomity.typeracer.shared.network.Connection;
@@ -24,6 +32,7 @@ import net.jomity.typeracer.shared.network.packets.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.format.TextStyle;
 
 enum SceneName {
     MENU, WAITING, GAME, GAMEOVER
@@ -197,13 +206,45 @@ public class TypeRacerClient extends Application {
     private Scene GameScene(double width, double height) {
         activeScene = SceneName.GAME;
 
-        Label title = new Label();
-        title.setAlignment(Pos.CENTER);
-        title.setText("Game Scene");
-        title.setFont(new Font(30));
+        BorderPane playerContainer = new BorderPane();
+        AnchorPane playerAnchor = maxAnchor(new AnchorPane());
+        Rectangle playerBackground = new Rectangle();
+        playerBackground.setStroke(combineColor(combineColor(player.color, Color.LIGHTGRAY), Color.LIGHTGRAY)); playerBackground.setStrokeWidth(5); playerBackground.setFill(combineColor(player.color, Color.LIGHTGRAY));
+        playerBackground.setArcWidth(30); playerBackground.setArcHeight(30);
+        playerBackground.widthProperty().bind(playerAnchor.widthProperty());
+        playerBackground.heightProperty().bind(playerAnchor.heightProperty());
+        playerContainer.setCenter(playerAnchor);
+        playerContainer.getChildren().add(playerBackground);
+
+        Text playerText = new Text();
+        playerText.setFont(new Font("Monospaced", 30));
+        playerText.setText("THIS IS A TEST OF THE PUBLIC BROADCASTING SERVICE. TEST WILL CONCLUDE NOW. THANK YOU.");
+        playerText.setTextAlignment(TextAlignment.CENTER);
+        playerText.wrappingWidthProperty().bind(playerAnchor.widthProperty());
+        playerText.yProperty().bind(playerAnchor.heightProperty());
+        playerContainer.getChildren().add(playerText);
+
+        BorderPane opponentContainer = new BorderPane();
+        AnchorPane opponentAnchor = maxAnchor(new AnchorPane());
+        Rectangle opponentBackground = new Rectangle();
+        opponentBackground.setStroke(combineColor(combineColor(opponent.color, Color.LIGHTGRAY), Color.LIGHTGRAY)); opponentBackground.setStrokeWidth(5); opponentBackground.setFill(combineColor(opponent.color, Color.LIGHTGRAY));
+        opponentBackground.setArcWidth(30); opponentBackground.setArcHeight(30);
+        opponentBackground.widthProperty().bind(opponentAnchor.widthProperty());
+        opponentBackground.heightProperty().bind(opponentAnchor.heightProperty());
+        opponentContainer.setCenter(opponentAnchor);
+        opponentContainer.getChildren().add(opponentBackground);
+
+
+        VBox container = new VBox();
+        VBox.setVgrow(playerContainer, Priority.ALWAYS);
+        VBox.setVgrow(opponentContainer, Priority.ALWAYS);
+        VBox.setMargin(playerContainer, new Insets(10, 10, 10, 10));
+        VBox.setMargin(opponentContainer, new Insets(10, 10, 10, 10));
+        container.getChildren().addAll(opponentContainer, playerContainer);
 
         BorderPane main = new BorderPane();
-        main.setCenter(title);
+        main.setCenter(container);
+        BorderPane.setMargin(container, new Insets(10, 10, 10, 10));
 
         return new Scene(main, width, height);
     }
@@ -242,13 +283,29 @@ public class TypeRacerClient extends Application {
     public void start(Stage stage) {
         this.stage = stage;
 
+        int width = 600, height = 400;
+
         stage.setTitle("Type Racer Client");
-        stage.setScene(MenuScene(600, 400));
+        stage.setScene(MenuScene(width, height));
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
         stage.show();
     }
 
     public void setScene(Scene scene) {
         Platform.runLater(() -> stage.setScene(scene));
+    }
+
+    public AnchorPane maxAnchor(AnchorPane anchor) {
+        AnchorPane.setTopAnchor(anchor, 0.0);
+        AnchorPane.setBottomAnchor(anchor, 0.0);
+        AnchorPane.setLeftAnchor(anchor, 0.0);
+        AnchorPane.setRightAnchor(anchor, 0.0);
+        return anchor;
+    }
+
+    public Color combineColor(Color a, Color b) {
+        return new Color((a.getRed() + b.getRed()) / 2.0, (a.getGreen() + b.getGreen()) / 2.0, (a.getBlue() + b.getBlue()) / 2.0, 1);
     }
 
     public void listenForPackets() {
