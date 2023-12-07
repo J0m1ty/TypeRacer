@@ -311,4 +311,8 @@ public class TypeRacerClient extends Application {
     public void disconnect(DisconnectionReason reason) {
         if (connection != null) connection.disconnect(reason);
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

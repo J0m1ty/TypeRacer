@@ -186,5 +186,9 @@ public class TypeRacerServer extends Application {
     public void exitApplication(ActionEvent ignoredEvent) {
         Platform.exit();
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
 
