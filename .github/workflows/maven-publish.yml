@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       contents: read
       packages: write
@@ -31,7 +31,7 @@ jobs:
       run: mvn -B package --file pom.xml -P client
 
     - name: Rename Client Artifact
-      run: mv target/TypeRacerClient-jar-with-dependencies.jar target/TypeRacerClient.jar
+      run: Copy-Item -Force target/TypeRacerClient-jar-with-dependencies.jar target/TypeRacerClient.jar
 
     - name: Upload Client Artifact
       uses: actions/upload-artifact@v3
@@ -43,7 +43,7 @@ jobs:
       run: mvn -B package --file pom.xml -P server
 
     - name: Rename Server Artifact
-      run: mv target/TypeRacerServer-jar-with-dependencies.jar target/TypeRacerServer.jar
+      run: Copy-Item -Force target/TypeRacerServer-jar-with-dependencies.jar target/TypeRacerServer.jar
 
     - name: Upload Server Artifact
       uses: actions/upload-artifact@v3
