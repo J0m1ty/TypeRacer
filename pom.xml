@@ -25,27 +25,30 @@
             <artifactId>javafx-fxml</artifactId>
             <version>18.0.2</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
             <id>client</id>
             <build>
+                <finalName>TypeRacerClient</finalName>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <version>3.6.0</version>
                         <configuration>
@@ -60,21 +63,12 @@
                         </configuration>
                         <executions>
                             <execution>
-
-                                <phase>package</phase> <!-- bind to the packaging phase -->
+                                <phase>package</phase>
                                 <goals>
                                     <goal>single</goal>
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>18</source>
-                            <target>18</target>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -83,8 +77,10 @@
         <profile>
             <id>server</id>
             <build>
+                <finalName>TypeRacerServer</finalName>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <version>3.6.0</version>
                         <configuration>
@@ -99,21 +95,12 @@
                         </configuration>
                         <executions>
                             <execution>
-
-                                <phase>package</phase> <!-- bind to the packaging phase -->
+                                <phase>package</phase>
                                 <goals>
                                     <goal>single</goal>
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <source>18</source>
-                            <target>18</target>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

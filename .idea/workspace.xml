@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/Entry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/Entry.java" afterDir="false" />
+    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="Allow builds">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +31,11 @@
         <option name="usePluginRegistry" value="true" />
       </MavenGeneralSettings>
     </option>
+    <option name="enabledProfiles">
+      <list>
+        <option value="client" />
+      </list>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -52,7 +54,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "MavenSettings"
@@ -65,7 +67,7 @@
       <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\src\main\java\net\jomity\typeracer\typeracerproject" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.TypeRacerProject-1.0-SNAPSHOT-jar-with-dependencies.jar">
+  <component name="RunManager" selected="JAR Application.TypeRacerClient-jar-with-dependencies.jar">
     <configuration name="Entry" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="net.jomity.typeracer.client.Entry" />
       <module name="TypeRacerProject" />
@@ -124,12 +126,20 @@
       <toRun name="TypeRacerServer" type="Application" />
       <method v="2" />
     </configuration>
+    <configuration name="TypeRacerClient-jar-with-dependencies.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerClient-jar-with-dependencies.jar" />
+      <method v="2" />
+    </configuration>
     <configuration name="TypeRacerProject-1.0-SNAPSHOT-jar-with-dependencies.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0-SNAPSHOT-jar-with-dependencies.jar" />
       <method v="2" />
     </configuration>
-    <configuration name="TypeRacerProject-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0-SNAPSHOT.jar" />
+    <configuration name="TypeRacerProject-1.0-jar-with-dependencies.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0-jar-with-dependencies.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TypeRacerProject-1.0.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/TypeRacerProject-1.0.jar" />
       <method v="2" />
     </configuration>
     <list>
@@ -138,14 +148,18 @@
       <item itemvalue="Application.TypeRacerClient2" />
       <item itemvalue="Application.Entry" />
       <item itemvalue="Compound.Build" />
+      <item itemvalue="JAR Application.TypeRacerClient-jar-with-dependencies.jar" />
       <item itemvalue="JAR Application.TypeRacerProject-1.0-SNAPSHOT-jar-with-dependencies.jar" />
-      <item itemvalue="JAR Application.TypeRacerProject-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JAR Application.TypeRacerProject-1.0-jar-with-dependencies.jar" />
+      <item itemvalue="JAR Application.TypeRacerProject-1.0.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.TypeRacerClient-jar-with-dependencies.jar" />
+        <item itemvalue="JAR Application.TypeRacerProject-1.0-jar-with-dependencies.jar" />
+        <item itemvalue="JAR Application.TypeRacerProject-1.0.jar" />
         <item itemvalue="JAR Application.TypeRacerProject-1.0-SNAPSHOT-jar-with-dependencies.jar" />
         <item itemvalue="Application.Entry" />
-        <item itemvalue="JAR Application.TypeRacerProject-1.0-SNAPSHOT.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -166,11 +180,31 @@
       <option name="project" value="LOCAL" />
       <updated>1701908640264</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Allow builds">
+      <option name="closed" value="true" />
+      <created>1701911405479</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701911405479</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
+    <MESSAGE value="Allow builds" />
+    <option name="LAST_COMMIT_MESSAGE" value="Allow builds" />
   </component>
 </project>
