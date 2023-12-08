@@ -1,5 +1,6 @@
 package net.jomity.typeracer.shared.constants;
 
-public enum Result {
-    WIN, LOSE, TIE
+public enum ResultType {
+    WPM, DISCONNECT
 }
+

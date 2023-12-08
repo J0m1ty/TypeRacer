@@ -10,22 +10,26 @@ public class StartPacket extends Packet {
     @Serial
     private static final long serialVersionUID = 4766630151662633442L;
 
+    private final String content;
     private final String name;
     private final double red;
     private final double green;
     private final double blue;
 
-    public StartPacket(PlayerInformation info) {
-        this.name = info.name;
-        this.red = info.color.getRed();
-        this.green = info.color.getGreen();
-        this.blue = info.color.getBlue();
+    public StartPacket(String content, PlayerInformation opponent) {
+        this.content = content;
+        this.name = opponent.name;
+        this.red = opponent.color.getRed();
+        this.green = opponent.color.getGreen();
+        this.blue = opponent.color.getBlue();
     }
 
     @Override
     public PacketType getType() {
         return PacketType.START ;
     }
+
+    public String getContent() { return content; }
 
     public String getName() {
         return name;

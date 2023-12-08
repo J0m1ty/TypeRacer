@@ -12,6 +12,8 @@ import java.util.concurrent.BlockingQueue;
 public class Client extends Connection {
     public int id;
 
+    public int wordsTyped = 0;
+
     private Client opponent;
 
     public PlayerInformation information;

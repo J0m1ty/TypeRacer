@@ -10,13 +10,16 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import net.jomity.typeracer.server.client.Client;
 import net.jomity.typeracer.server.client.ClientPacket;
-import net.jomity.typeracer.shared.constants.Result;
+import net.jomity.typeracer.shared.constants.Constants;
 import net.jomity.typeracer.shared.constants.DisconnectionReason;
+import net.jomity.typeracer.shared.constants.Result;
+import net.jomity.typeracer.shared.constants.ResultType;
 import net.jomity.typeracer.shared.network.packets.*;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,8 +27,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class TypeRacerServer extends Application {
-    public static final long TIMEOUT = 100;
-
     private ServerSocket serverSocket;
 
     private final ConcurrentMap<Thread, Game> activeGames = new ConcurrentHashMap<>();
@@ -36,12 +37,28 @@ public class TypeRacerServer extends Application {
 
     public int nClients = 0;
 
+    public ArrayList<String> words = new ArrayList<>();
+
     public void log(String text) {
         Platform.runLater(() -> console.appendText(text + "\n"));
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
+        InputStream in = TypeRacerServer.class.getResourceAsStream("/resources/words.txt");
+        if (in == null) {
+            in = TypeRacerServer.class.getClassLoader().getResourceAsStream("words.txt");
+        }
+        if (in == null) {
+            throw new FileNotFoundException("words.txt not found");
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            words.add(line);
+        }
+
         ScrollPane scroll = new ScrollPane();
         scroll.setContent(console);
         console.setWrapText(true);
@@ -63,7 +80,7 @@ public class TypeRacerServer extends Application {
 
                     Client client = new Client(++nClients, socket);
                     client.listenForPackets();
-                    client.monitorConnection(TIMEOUT);
+                    client.monitorConnection(Constants.TIMEOUT);
 
                     log("Client #" + nClients + " connected with hostname " + socket.getInetAddress().getHostAddress());
 
@@ -95,6 +112,9 @@ public class TypeRacerServer extends Application {
 
         private final BlockingQueue<ClientPacket> packetQueue;
 
+        private final int maxTime = 15;
+        private int timeLeft = maxTime;
+
         public Game(Client player1, Client player2) {
             this.player1 = player1;
             this.player2 = player2;
@@ -125,13 +145,13 @@ public class TypeRacerServer extends Application {
 
                     if (!player1.isConnected()) {
                         log("Client #" + player1.id + " disconnected");
-                        player2.sendPacket(new GameOverPacket(Result.WIN));
+                        player2.sendPacket(new GameOverPacket(Result.WIN, ResultType.DISCONNECT, player2.wordsTyped / (maxTime / 60.0), player1.wordsTyped / (maxTime / 60.0)));
                         break;
                     }
 
                     if (!player2.isConnected()) {
                         log("Client #" + player2.id + " disconnected");
-                        player1.sendPacket(new GameOverPacket(Result.WIN));
+                        player1.sendPacket(new GameOverPacket(Result.WIN, ResultType.DISCONNECT, player1.wordsTyped / (maxTime / 60.0), player2.wordsTyped / (maxTime / 60.0)));
                         break;
                     }
 
@@ -139,13 +159,37 @@ public class TypeRacerServer extends Application {
 
                     if (!initialized) {
                         if (player1.initialized && player2.initialized) {
-                            player1.sendPacket(new StartPacket(player2.information));
-                            player2.sendPacket(new StartPacket(player1.information));
+                            StringBuilder content = new StringBuilder();
+                            for (int i = 0; i < 50; i++) {
+                                content.append(words.get((int) (Math.random() * words.size()))).append(" ");
+                            }
+                            String contentString = content.toString();
+
+                            player1.sendPacket(new StartPacket(contentString, player2.information));
+                            player2.sendPacket(new StartPacket(contentString, player1.information));
+
+                            Thread countdown = new Thread(startCountdown());
+                            countdown.start();
+
                             initialized = true;
                         }
                         else {
                             continue;
                         }
+                    }
+
+                    if (raw instanceof TypingPacket packet) {
+                        if (client == player1) {
+                            player2.sendPacket(packet);
+                        } else {
+                            player1.sendPacket(packet);
+                        }
+                        continue;
+                    }
+
+                    if (raw instanceof WordPacket) {
+                        client.wordsTyped++;
+                        continue;
                     }
 
                     System.out.println("Unhandled packet: " + raw.getType() + " from client #" + client.id);
@@ -156,6 +200,49 @@ public class TypeRacerServer extends Application {
             }
 
             stop();
+        }
+
+        public Runnable startCountdown() {
+            return () -> {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+
+                for (int i = 0; i < maxTime; i++) {
+                    if (!gameRunning) return;
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
+
+                    timeLeft--;
+
+                    player1.sendPacket(new TimeLeftPacket(timeLeft));
+                    player2.sendPacket(new TimeLeftPacket(timeLeft));
+                }
+
+                double player1WPM = player1.wordsTyped / (maxTime / 60.0);
+                double player2WPM = player2.wordsTyped / (maxTime / 60.0);
+
+                if (player1WPM > player2WPM) {
+                    player1.sendPacket(new GameOverPacket(Result.WIN, ResultType.WPM, player1WPM, player2WPM));
+                    player2.sendPacket(new GameOverPacket(Result.LOSE, ResultType.WPM, player2WPM, player1WPM));
+                } else if (player2WPM > player1WPM) {
+                    player1.sendPacket(new GameOverPacket(Result.LOSE, ResultType.WPM, player1WPM, player2WPM));
+                    player2.sendPacket(new GameOverPacket(Result.WIN, ResultType.WPM, player2WPM, player1WPM));
+                } else {
+                    player1.sendPacket(new GameOverPacket(Result.TIE, ResultType.WPM, player1WPM, player2WPM));
+                    player2.sendPacket(new GameOverPacket(Result.TIE, ResultType.WPM, player2WPM, player1WPM));
+                }
+
+                gameRunning = false;
+            };
         }
 
         public void stop() {

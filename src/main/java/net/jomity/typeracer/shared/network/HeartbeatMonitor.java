@@ -1,6 +1,6 @@
 package net.jomity.typeracer.shared.network;
 
-import net.jomity.typeracer.server.TypeRacerServer;
+import net.jomity.typeracer.shared.constants.Constants;
 
 public class HeartbeatMonitor {
     private volatile boolean heartbeatReceived = false;
@@ -12,7 +12,7 @@ public class HeartbeatMonitor {
     }
 
     public synchronized boolean hasResponded() {
-        long response = (System.currentTimeMillis() - lastHeartbeat) - TypeRacerServer.TIMEOUT;
+        long response = (System.currentTimeMillis() - lastHeartbeat) - Constants.TIMEOUT;
         return heartbeatReceived && (response >= 0);
     }
 }
