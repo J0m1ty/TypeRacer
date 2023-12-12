@@ -27,7 +27,7 @@ import java.net.Socket;
 import java.util.*;
 
 enum SceneName {
-    MENU, WAITING, GAME, GAMEOVER
+    MENU, WAITING, GAME, GAMEOVER, HOWTO
 }
 
 class TextGroup {
@@ -145,6 +145,10 @@ public class TypeRacerClient extends Application {
     public PlayerInformation player;
     public PlayerInformation opponent;
 
+    String savedName = null;
+    Color savedColor = null;
+    String savedHost = null;
+
     SceneName activeScene;
 
     Stage stage;
@@ -165,9 +169,10 @@ public class TypeRacerClient extends Application {
         title.setFont(TITLE_FONT);
 
         TextField serverField = new TextField();
+        serverField.setText("localhost");
+        if (savedHost != null) serverField.setText(savedHost);
         serverField.setFocusTraversable(false);
         serverField.setFont(TEXT_FONT);
-        serverField.setText("localhost");
         serverField.setPrefWidth(100); serverField.setMaxWidth(100);
 
         Button playButton = new Button();
@@ -184,13 +189,13 @@ public class TypeRacerClient extends Application {
         description.setFont(TEXT_FONT);
         description.setText("Your Information:");
 
-        ColorPicker colorPicker = new ColorPicker();
+        ColorPicker colorPicker = new ColorPicker(savedColor != null ? savedColor : Color.WHITE);
         colorPicker.setFocusTraversable(false);
 
         TextField nameField = new TextField();
         nameField.setFont(TEXT_FONT);
         nameField.setFocusTraversable(false);
-        nameField.setText("Player");
+        nameField.setText(savedName != null ? savedName : "Player");
         nameField.prefWidthProperty().bind(colorPicker.widthProperty());
         nameField.maxWidthProperty().bind(colorPicker.widthProperty());
 
@@ -205,15 +210,30 @@ public class TypeRacerClient extends Application {
         info.getChildren().add(information);
 
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().add(options);
         AnchorPane.setTopAnchor(options, 10.0);
         AnchorPane.setLeftAnchor(options, 10.0);
+        anchorPane.getChildren().add(options);
+
+        Button helpButton = new Button();
+        helpButton.setFont(TEXT_FONT);
+        helpButton.setFocusTraversable(false);
+        helpButton.setText("Instructions");
+        AnchorPane.setTopAnchor(helpButton, 10.0);
+        AnchorPane.setRightAnchor(helpButton, 10.0);
+        anchorPane.getChildren().add(helpButton);
+
+        StackPane centerContainer = new StackPane();
+        centerContainer.setPickOnBounds(false);
+        anchorPane.setPickOnBounds(false);
+        center.setPickOnBounds(false);
+        centerContainer.getChildren().addAll(anchorPane, center);
 
         BorderPane main = new BorderPane();
         BorderPane.setMargin(info, new Insets(10, 10, 10, 10));
-        main.setCenter(center);
+        main.setCenter(centerContainer);
         main.setBottom(info);
-        main.getChildren().add(anchorPane);
+
+        helpButton.setOnAction(event -> setScene(HowToScene(stage.getScene().getWidth(), stage.getScene().getHeight())));
 
         playButton.setOnAction(event -> {
             playButton.setDisable(true);
@@ -229,7 +249,7 @@ public class TypeRacerClient extends Application {
                     player = new PlayerInformation(nameField.getText(), colorPicker.getValue());
                     connection.sendPacket(new RegisterPacket(player));
 
-                    Platform.runLater(() -> setScene(WaitingScene(stage.getScene().getWidth(), stage.getScene().getHeight())));
+                    setScene(WaitingScene(stage.getScene().getWidth(), stage.getScene().getHeight()));
                 } catch (IOException e) {
                     Platform.runLater(() -> {
                         information.setTextFill(Color.MEDIUMVIOLETRED);
@@ -244,18 +264,23 @@ public class TypeRacerClient extends Application {
         nameField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 String text = nameField.getText().trim();
-                System.out.println(text.length() + " " + text.matches("^[\\w\\-\\s]+$"));
                 if (!text.matches("^[\\w\\-\\s]+$") || text.length() > 16 || text.length() < 3) {
                     nameField.setText("Player");
                 } else {
                     nameField.setText(text);
                 }
+
+                savedName = nameField.getText();
             }
         });
+
+        colorPicker.valueProperty().addListener((arg0, oldValue, newValue) -> savedColor = colorPicker.getValue());
 
         serverField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
             if (!newValue) {
                 playButton.setDisable(!serverField.getText().matches("^localhost|(((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4})$"));
+
+                if (!playButton.isDisable()) savedHost = serverField.getText();
             }
         });
 
@@ -283,6 +308,45 @@ public class TypeRacerClient extends Application {
         });
 
         return menu;
+    }
+
+    private Scene HowToScene(double width, double height) {
+        activeScene = SceneName.HOWTO;
+
+        Label title = new Label();
+        title.setAlignment(Pos.CENTER);
+        title.setFont(TITLE_FONT);
+        title.setText("How to Play");
+        title.setAlignment(Pos.CENTER);
+
+        Label instructions = new Label();
+        instructions.setAlignment(Pos.CENTER);
+        instructions.setFont(TEXT_FONT);
+        instructions.setText("1. Choose a name and color\n2. Enter a valid server to connect to and click 'Play Game'\n3. Once an opponent is found, type the prompt as quickly as possible\n4. Win by having a higher WPM\n5. Have fun, good luck!");
+
+        Button backButton = new Button();
+        backButton.setFont(TEXT_FONT);
+        backButton.setFocusTraversable(false);
+        backButton.setText("Go Back");
+        backButton.setAlignment(Pos.CENTER);
+
+        VBox titleContainer = new VBox();
+        titleContainer.setAlignment(Pos.CENTER);
+        titleContainer.getChildren().add(title);
+
+        VBox backContainer = new VBox();
+        backContainer.setAlignment(Pos.CENTER);
+        backContainer.getChildren().add(backButton);
+
+        BorderPane main = new BorderPane();
+        main.setTop(titleContainer);
+        main.setCenter(instructions);
+        main.setBottom(backContainer);
+        main.setPadding(new Insets(10, 10, 10, 10));
+
+        backButton.setOnAction(event -> setScene(MenuScene(stage.getScene().getWidth(), stage.getScene().getHeight())));
+
+        return new Scene(main, width, height);
     }
 
     private Scene WaitingScene(double width, double height) {

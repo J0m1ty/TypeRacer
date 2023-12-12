@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="finish game, fix fonts, finish networking, random text, etc.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/ResultType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TimeLeftPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TypingPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/WordPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/words.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PacketType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/PacketType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/constants/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/HeartbeatMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/HeartbeatMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,10 +24,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -205,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701958675390</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="finish game, fix fonts, finish networking, random text, etc.">
+      <option name="closed" value="true" />
+      <created>1702066661966</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702066661966</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
