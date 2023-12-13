@@ -81,7 +81,7 @@ class TextGroup {
         }
         else {
             inError = false;
-            written.add(0, upcoming.get(0));
+            written.add(0, upcoming.remove(0));
             pointer++;
         }
 

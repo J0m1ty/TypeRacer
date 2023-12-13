@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="add instructions and save player information across games">
-      <change afterPath="$PROJECT_DIR$/lib/jfxrt.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d992f60b-be5f-4fbb-abee-fa62b2e2463e" name="Changes" comment="fix stuff omg">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/client/TypeRacerClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/TypeRacerServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/server/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/DisconnectPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/DisconnectPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/GameOverPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/HeartbeatPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/HeartbeatPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/Packet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/Packet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/RegisterPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/RegisterPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/SignalPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/SignalPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/StartPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TimeLeftPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TimeLeftPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TypingPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/TypingPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/WordPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/jomity/typeracer/shared/network/packets/WordPacket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +48,7 @@
     </option>
     <option name="enabledProfiles">
       <list>
-        <option value="client" />
+        <option value="server" />
       </list>
     </option>
   </component>
@@ -79,19 +63,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2023.2.5/plugins/javaFX/lib/javaFX.jar",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2023.2.5/plugins/javaFX/lib/javaFX.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\jomit\IdeaProjects\TypeRacerProject\lib" />
@@ -230,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702425536549</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fix stuff omg">
+      <option name="closed" value="true" />
+      <created>1702437108980</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702437108981</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -252,7 +244,8 @@
     <MESSAGE value="adding client graphics" />
     <MESSAGE value="finish game, fix fonts, finish networking, random text, etc." />
     <MESSAGE value="add instructions and save player information across games" />
-    <option name="LAST_COMMIT_MESSAGE" value="add instructions and save player information across games" />
+    <MESSAGE value="fix stuff omg" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix stuff omg" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
