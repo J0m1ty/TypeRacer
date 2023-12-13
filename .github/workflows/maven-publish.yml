@@ -19,11 +19,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup Java
+    - name: Setup Liberica JDK 8 Full
       uses: actions/setup-java@v4
       with:
-        java-version: '21'
-        distribution: 'zulu'
+        java-version: '1.8'
+        distribution: 'liberica'
+        java-package: jdk+fx
         server-id: github
         settings-path: ${{ github.workspace }}
 
