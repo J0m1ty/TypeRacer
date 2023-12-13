@@ -67,7 +67,7 @@ class TextGroup {
         flow.translateYProperty().bind(Bindings.subtract(Bindings.divide(height, 2), writtenText.getLayoutBounds().getHeight() / 2));
 
         for (int i = this.content.length() - 1; i >= 0; i--) {
-            upcoming.addFirst(this.content.substring(i, i + 1));
+            upcoming.add(0, this.content.substring(i, i + 1));
         }
 
         update();
@@ -81,7 +81,7 @@ class TextGroup {
         }
         else {
             inError = false;
-            written.addFirst(upcoming.removeFirst());
+            written.add(0, upcoming.get(0));
             pointer++;
         }
 
@@ -169,8 +169,7 @@ public class TypeRacerClient extends Application {
         title.setFont(TITLE_FONT);
 
         TextField serverField = new TextField();
-        serverField.setText("localhost");
-        if (savedHost != null) serverField.setText(savedHost);
+        serverField.setText(savedHost != null ? savedHost : "localhost");
         serverField.setFocusTraversable(false);
         serverField.setFont(TEXT_FONT);
         serverField.setPrefWidth(100); serverField.setMaxWidth(100);
@@ -196,8 +195,6 @@ public class TypeRacerClient extends Application {
         nameField.setFont(TEXT_FONT);
         nameField.setFocusTraversable(false);
         nameField.setText(savedName != null ? savedName : "Player");
-        nameField.prefWidthProperty().bind(colorPicker.widthProperty());
-        nameField.maxWidthProperty().bind(colorPicker.widthProperty());
 
         VBox options = new VBox();
         options.setAlignment(Pos.TOP_LEFT);
@@ -614,23 +611,27 @@ public class TypeRacerClient extends Application {
     }
 
     public void handlePacket(Packet raw) {
-        if (raw instanceof TypingPacket packet) {
+        if (raw instanceof TypingPacket) {
+            TypingPacket packet = (TypingPacket) raw;
             if (activeScene == SceneName.GAME) {
                 Platform.runLater(() -> opponentText.type(packet.getContent()));
             }
         } if (raw instanceof HeartbeatPacket) {
             connection.sendPacket(new HeartbeatPacket());
-        } else if (raw instanceof TimeLeftPacket packet) {
+        } else if (raw instanceof TimeLeftPacket) {
+            TimeLeftPacket packet = (TimeLeftPacket) raw;
             if (activeScene == SceneName.GAME) {
                 Platform.runLater(() -> timeLeft.setText("Time Left: " + packet.getTimeLeft()));
             }
-        } else if (raw instanceof StartPacket packet) {
+        } else if (raw instanceof StartPacket) {
+            StartPacket packet = (StartPacket) raw;
             if (activeScene == SceneName.WAITING) {
                 content = packet.getContent();
                 opponent = new PlayerInformation(packet.getName(), packet.getColor());
                 setScene(GameScene(stage.getScene().getWidth(), stage.getScene().getHeight()));
             }
-        } else if (raw instanceof GameOverPacket packet) {
+        } else if (raw instanceof GameOverPacket) {
+            GameOverPacket packet = (GameOverPacket) raw;
             if (activeScene == SceneName.GAME) {
                 result = packet.getResult();
                 playerWPM = packet.getPlayerWPM();

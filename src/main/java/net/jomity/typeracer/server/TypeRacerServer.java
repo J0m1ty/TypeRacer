@@ -178,7 +178,8 @@ public class TypeRacerServer extends Application {
                         }
                     }
 
-                    if (raw instanceof TypingPacket packet) {
+                    if (raw instanceof TypingPacket) {
+                        TypingPacket packet = (TypingPacket) raw;
                         if (client == player1) {
                             player2.sendPacket(packet);
                         } else {

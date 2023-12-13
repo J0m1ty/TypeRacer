@@ -59,7 +59,8 @@ public class Client extends Connection {
                         continue;
                     }
 
-                    if (raw instanceof RegisterPacket packet) {
+                    if (raw instanceof RegisterPacket) {
+                        RegisterPacket packet = (RegisterPacket) raw;
                         packet.validate();
                         information = new PlayerInformation(packet.getName(), packet.getColor());
                         initialized = true;

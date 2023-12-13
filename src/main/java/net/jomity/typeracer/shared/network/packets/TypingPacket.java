@@ -2,10 +2,7 @@ package net.jomity.typeracer.shared.network.packets;
 
 import net.jomity.typeracer.shared.constants.PacketType;
 
-import java.io.Serial;
-
 public class TypingPacket extends Packet {
-    @Serial
     private static final long serialVersionUID = -2209177355770023524L;
 
     private final char content;

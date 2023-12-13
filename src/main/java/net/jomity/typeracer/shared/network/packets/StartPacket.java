@@ -4,10 +4,7 @@ import javafx.scene.paint.Color;
 import net.jomity.typeracer.shared.constants.PacketType;
 import net.jomity.typeracer.shared.constants.PlayerInformation;
 
-import java.io.Serial;
-
 public class StartPacket extends Packet {
-    @Serial
     private static final long serialVersionUID = 4766630151662633442L;
 
     private final String content;
